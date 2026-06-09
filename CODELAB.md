@@ -383,9 +383,20 @@ Sửa `tax_agent/graph.py`, thay đổi system prompt để agent trả lời ng
 ### Câu Hỏi Ôn Tập
 
 1. Khi nào nên dùng single agent thay vì multi-agent?
+
+   **Trả lời:** Khi bài toán đơn giản, không cần phân chia domain, yêu cầu độ trễ thấp, hoặc khi muốn giảm độ phức tạp của orchestration. Single agent phù hợp cho các câu hỏi nguyên khối, tra cứu thông tin đơn lẻ, hoặc khi không cần parallelism.
+
 2. Ưu điểm của A2A protocol so với gRPC hoặc REST thông thường?
+
+   **Trả lời:** A2A cung cấp mô hình delegating task, traceable request flow, dynamic discovery via Registry, và hỗ trợ delegation loop prevention. Nó cho phép các agents tự động giao nhiệm vụ, mở rộng dễ dàng, và tích hợp sẵn với LangGraph cho orchestration.
+
 3. Làm thế nào để prevent infinite delegation loops trong A2A?
+
+   **Trả lời:** Thiết lập giới hạn độ sâu delegations (max hops), truyền `trace_id` và danh sách agents đã truy cập trong header, và mỗi agent kiểm tra trước khi delegating để tránh lặp lại. Ngoài ra, có thể sử dụng timeout và fallback khi phát hiện loop.
+
 4. Tại sao cần Registry service? Có thể hardcode URLs không?
+
+   **Trả lời:** Registry cho phép discovery động, cân bằng tải và khả năng mở rộng khi thêm/bớt agents mà không thay đổi code client. Hardcode URLs làm mất tính linh hoạt, khó bảo trì và không hỗ trợ scaling hoặc failover.
 
 ### Bài Tập Nâng Cao (Tự Học)
 
